@@ -22,7 +22,7 @@ function App() {
       <header className="App-header">
         <Counter></Counter>
         {
-          posts.map(pst=> <Posts title={pst.title}></Posts>)
+          posts.map(pst=> <Posts title={pst.title} key={pst.id}></Posts>)
         }
 
         {
