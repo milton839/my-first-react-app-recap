@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
   const friendsName = ['Azizul Islam Milton','Morsadur Zaman Firoj','Khan Abirul Islam','Saykat Hossain'];
@@ -10,10 +10,21 @@ function App() {
     {name:"Khan Abirul Islam",gf:"Shima Khatun",age:"24",district:"Khulna"},
     {name:"Saykat Hossain",gf:"Shoma Khan",age:"25",district:"Rajshahi"},
   ];
+  const [posts, setPosts] = useState([]);
+  useEffect(()=>{
+    fetch('https://jsonplaceholder.typicode.com/posts')
+    .then(res => res.json())
+    .then(data => setPosts(data))
+  },[])
+  
   return (
     <div className="App">
       <header className="App-header">
         <Counter></Counter>
+        {
+          posts.map(pst=> <Posts title={pst.title}></Posts>)
+        }
+
         {
           friendsDetails.map(friend=><FriendsDetails friend={friend}></FriendsDetails>)
         }
@@ -87,6 +98,21 @@ function DisplayMovie(props){
   return(
     <div>
       <h1>Total Movies: {props.count}</h1>
+    </div>
+  )
+}
+
+function Posts(props){
+  const postStyle = {
+    width:'900px',
+    border:'5px solid red',
+    borderRadius:'15px',
+    margin:'15px',
+    padding:'25px',
+  }
+  return(
+    <div>
+      <h1 style={postStyle}>Posts: {props.title}</h1>
     </div>
   )
 }
